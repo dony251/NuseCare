@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Nurses – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========================================== */
+    /* 🌟 RTL Fixes (لضبط الأسهم وعلامات X) 🌟 */
+    /* ========================================== */
+    [dir="rtl"] .form-select {
+        background-position: left 0.75rem center !important;
+        padding-right: 1rem !important;
+        padding-left: 2.25rem !important;
+    }
+    [dir="rtl"] .form-control {
+        padding-right: 1rem !important;
+    }
+  </style>
+</head>
+<body id="page-nurses" style="background:var(--light-bg); display: flex; flex-direction: column; min-height: 100vh;">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration:none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">☰</button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav_about">About</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 ms-3">
+          <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
+            <span class="lang-flag" aria-hidden="true">🌐</span>
+            <span data-i18n="nav_lang">العربية</span>
+          </button>
+          <a href="login.html" class="btn btn-outline-primary" data-i18n="nav_login">Log In</a>
+          <a href="register.html" class="btn btn-primary" data-i18n="nav_signup">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:60px 0 50px;">
+    <div class="container text-center">
+      <h1 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:2.6rem; color:#ffffff !important; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" data-i18n="nurses_h1">Find a Home Nurse</h1>
+      <p style="font-size:1.15rem; color:rgba(255, 255, 255, 0.95) !important; margin:0 auto;" data-i18n="nurses_sub">Browse our network of verified, licensed home nursing professionals</p>
+    </div>
+  </div>
+
+  <div class="container py-4 flex-grow-1">
+    <div class="row g-4 flex-lg-row">
+
+      <div class="col-lg-3">
+        <div class="bg-white-card shadow-sm" style="position:sticky; top:90px; border-radius:16px; border:1px solid var(--border); padding:20px;">
+          <h6 class="fw-bold mb-3 text-dark" data-i18n="filter_h">🔍 Filter Nurses</h6>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted" data-i18n="filter_search">SEARCH</label>
+            <input type="text" class="form-control" id="nurseSearch" data-i18n-placeholder="search_placeholder" placeholder="Name or keyword…">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted" data-i18n="filter_spec">SPECIALTY</label>
+            <select class="form-select" id="specialtyFilter">
+              <option value="" data-i18n="spec_all">All Specialties</option>
+              <option value="Elderly Care" data-i18n="spec_elderly">Elderly Care</option>
+              <option value="Post-Op Care" data-i18n="spec_post_op">Post-Op Care</option>
+              <option value="Pediatric Care" data-i18n="spec_pediatric">Pediatric Care</option>
+              <option value="Chronic Disease" data-i18n="spec_chronic">Chronic Disease</option>
+              <option value="Palliative Care" data-i18n="spec_palliative">Palliative Care</option>
+              <option value="Rehabilitation" data-i18n="spec_rehab">Rehabilitation</option>
+              <option value="General Care">General Care</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted" data-i18n="filter_avail">AVAILABILITY</label>
+            <select class="form-select" id="availFilter">
+              <option value="" data-i18n="avail_any">Any Status</option>
+              <option value="Available" data-i18n="avail_now">Available Now</option>
+              <option value="Busy" data-i18n="avail_busy">Busy / Unavailable</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-muted" data-i18n="filter_sort">SORT BY</label>
+            <select class="form-select" id="sortSelect">
+              <option value="" data-i18n="sort_default">Default / Recommended</option>
+              <option value="rating" data-i18n="sort_rating">Highest Rating First</option>
+              <option value="price_asc" data-i18n="sort_price_asc">Price: Low to High</option>
+              <option value="price_desc" data-i18n="sort_price_desc">Price: High to Low</option>
+            </select>
+          </div>
+
+          <button id="clearFiltersBtn" class="btn btn-outline-danger w-100 btn-sm fw-bold" data-i18n="filter_clear">Clear All Filters</button>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        
+        <div class="bg-white-card mb-4 shadow-sm" style="padding: 1.2rem 1.8rem; border-radius:16px; border:1px solid var(--border);">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+              <span class="fw-semibold text-muted small"><span data-i18n="showing_lbl">Showing</span> <strong class="text-primary fs-5" id="nurseCount">0</strong> <span data-i18n="nurses_lbl">nurses found</span></span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" data-i18n="dash_refresh">↻ Refresh</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row g-4" id="nurseGrid">
+          <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="text-muted mt-2 fw-semibold" data-i18n="loading_db">جاري البحث في قاعدة البيانات...</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top:auto; background-color: #0f172a; border-top:1px solid var(--border);">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand mb-2">
+            <svg width="24" height="24" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-middle me-1">
+              <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+            </svg>
+            <span style="color:white;">Nurse<span style="color:#14b8a6;">Care</span></span>
+          </div>
+          <p style="font-size:.9rem;line-height:1.7; color:#cbd5e1;" data-i18n="why_p">Professional home nursing services connecting patients with certified caregivers. Your health, our priority.</p>
+        </div>
+        <div class="col-md-2">
+          <h6 class="fw-bold" style="color:white;" data-i18n="footer_nav">Navigation</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="index.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_home">Home</a></li>
+            <li class="mb-2"><a href="nurses.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_nurses">Find Nurses</a></li>
+            <li class="mb-2"><a href="about.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_about">About</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="fw-bold" style="color:white;" data-i18n="footer_specs">Specialties</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="nurses.html?q=Elderly Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_elderly">Elderly Care</a></li>
+            <li class="mb-2"><a href="nurses.html?q=Post-Op Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_post_op">Post-Op Care</a></li>
+            <li class="mb-2"><a href="nurses.html?q=Pediatric Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_pediatric">Pediatric Care</a></li>
+            <li class="mb-2"><a href="nurses.html?q=Chronic Disease" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_chronic">Chronic Disease</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="fw-bold" style="color:white;" data-i18n="footer_account">Account</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="login.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_login">Log In</a></li>
+            <li class="mb-2"><a href="register.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_signup">Sign Up</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-center mt-4 pt-4 border-top small" style="color:#64748b; border-color:#1e293b !important;" data-i18n="footer_copy">
+        © 2026 NurseCare. All rights reserved. | Built by Thebes Academy students.
+      </div>
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+
+  <script>
+    window.allNurses = [];
+
+    function renderGrid(nurses) {
+      const grid = document.getElementById('nurseGrid');
+      if(!grid) return;
+      
+      grid.innerHTML = '';
+      const countEl = document.getElementById('nurseCount');
+      if(countEl) countEl.textContent = nurses.length;
+
+      if (nurses.length === 0) {
+        grid.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <div style="font-size:3rem; margin-bottom:1rem; opacity:0.5;">🔍</div>
+            <h5 class="fw-bold text-muted" data-i18n="search_no_results">No nurses found!</h5>
+            <p class="text-muted small" data-i18n="search_adjust">Try adjusting your filters or search terms.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let currentLang = localStorage.getItem('nc_lang') || 'en';
+
+      nurses.forEach(nurse => {
+        let badgeClass = nurse.status === 'Available' ? 'bg-success' : 'bg-secondary';
+        let btnState = nurse.status === 'Busy' ? 'disabled' : '';
+        
+        let btnTextStr = nurse.status === 'Busy' 
+            ? (currentLang === 'ar' ? 'غير متاح' : 'Unavailable') 
+            : (currentLang === 'ar' ? 'احجز الآن' : 'Book Now');
+        
+        let statusStr = nurse.status === 'Available' 
+            ? (currentLang === 'ar' ? 'متاح' : 'Available') 
+            : (currentLang === 'ar' ? 'مشغول' : 'Busy');
+
+        let safeName = nurse.name ? nurse.name.trim() : 'Unknown Nurse';
+        let safeSpec = nurse.spec || 'General Care';
+        let safeDesc = nurse.desc || 'لم تتم كتابة نبذة شخصية بعد.';
+        let safePrice = nurse.price || 0;
+        let safeRating = nurse.rating || 4.8;
+
+        let bookLink = nurse.status === 'Available' ? `request.html?nurse_id=${nurse.id}&name=${encodeURIComponent(safeName)}&spec=${encodeURIComponent(safeSpec)}` : '#';
+
+        let initials = 'U';
+        let nameParts = safeName.split(/\s+/).filter(n => n.length > 0);
+        if (nameParts.length >= 2) {
+            initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+        } else if (safeName.length >= 2) {
+            initials = safeName.substring(0, 2).toUpperCase();
+        } else if (safeName.length === 1) {
+            initials = safeName.toUpperCase();
+        }
+
+        let dbImage = nurse.profile_image || nurse.img || ''; 
+        let avatarHtml = '';
+        
+        const bgColors = ['#dbeafe', '#ccfbf1', '#fef3c7', '#f3e8ff', '#ffe4e6'];
+        const txtColors = ['#1e40af', '#0f766e', '#b45309', '#6b21a8', '#b91c1c'];
+        const colorIdx = (nurse.id || 1) % bgColors.length;
+        
+        // 🌟 التعديل الآمن للصور 🌟
+        let fallbackStyle = `width:70px;height:70px;border-radius:50%;background-color:${bgColors[colorIdx]};color:${txtColors[colorIdx]};align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;border:2px solid var(--primary); letter-spacing:1px;`;
+
+        if (dbImage && dbImage.trim() !== '' && !dbImage.includes('default-avatar') && dbImage !== 'null') {
+            avatarHtml = `
+              <img src="${dbImage}" alt="${safeName}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--primary);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div style="${fallbackStyle} display:none;">${initials}</div>
+            `;
+        } else {
+            avatarHtml = `<div style="${fallbackStyle} display:flex;">${initials}</div>`;
+        }
+
+        const cardHTML = `
+          <div class="col-md-6 col-xl-4">
+            <div class="card h-100 p-3 shadow-sm bg-white" style="border-radius:16px; border:1px solid var(--border); transition: transform 0.2s;">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                ${avatarHtml}
+                <div>
+                  <h6 class="fw-bold mb-1 text-dark">${safeName}</h6>
+                  <span class="badge bg-primary bg-opacity-10 text-primary mb-1">${safeSpec}</span>
+                </div>
+              </div>
+              <div class="mb-2 text-warning small fw-bold">★★★★½ <span class="text-muted fw-normal ms-1">${safeRating}</span></div>
+              <p class="text-muted small mb-3 text-truncate" style="max-height: 45px; overflow: hidden; line-height:1.5;">${safeDesc}</p>
+              <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                <div class="fw-bold fs-5 text-primary"><span data-i18n="currency_egp">EGP</span> ${safePrice}<span class="text-muted fs-6 fw-normal" data-i18n="per_hour">/hr</span></div>
+                <span class="badge ${badgeClass}">${statusStr}</span>
+              </div>
+              <div class="d-flex gap-2 mt-3">
+                <a href="nurse-profile.html?id=${nurse.id}" class="btn btn-outline-primary flex-grow-1" data-i18n="btn_view_profile">${currentLang === 'ar' ? 'عرض الصفحة' : 'View Profile'}</a>
+                <a href="${bookLink}" class="btn btn-primary flex-grow-1 ${btnState}">${btnTextStr}</a>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += cardHTML;
+      });
+
+      if(typeof window.translatePage === 'function') {
+          window.translatePage(localStorage.getItem('nc_lang') || 'en');
+      }
+    }
+
+    function applyFilters() {
+      const searchInput = document.getElementById('nurseSearch');
+      const specFilter = document.getElementById('specialtyFilter');
+      const availFilter = document.getElementById('availFilter');
+      const sortSelect = document.getElementById('sortSelect');
+      
+      if(!searchInput || !specFilter || !availFilter || !sortSelect) return;
+
+      const searchTerm = searchInput.value.toLowerCase();
+      const specTerm = specFilter.value;
+      const availTerm = availFilter.value;
+      const sortMode = sortSelect.value;
+
+      let filteredNurses = window.allNurses.filter(nurse => {
+        let nName = (nurse.name || '').toLowerCase();
+        let nDesc = (nurse.desc || '').toLowerCase();
+        let nSpec = (nurse.spec || '').toLowerCase();
+
+        const matchSearch = nName.includes(searchTerm) || nDesc.includes(searchTerm) || nSpec.includes(searchTerm);
+        const matchSpec = specTerm === "" || (nurse.spec && nurse.spec === specTerm);
+        const matchAvail = availTerm === "" || (nurse.status && nurse.status === availTerm);
+        return matchSearch && matchSpec && matchAvail;
+      });
+
+      if (sortMode === 'rating') {
+        filteredNurses.sort((a, b) => b.rating - a.rating);
+      } else if (sortMode === 'price_asc') {
+        filteredNurses.sort((a, b) => a.price - b.price);
+      } else if (sortMode === 'price_desc') {
+        filteredNurses.sort((a, b) => b.price - a.price);
+      }
+
+      renderGrid(filteredNurses);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlQuery = urlParams.get('q');
+      if (urlQuery) {
+        const searchInput = document.getElementById('nurseSearch');
+        if(searchInput) searchInput.value = urlQuery;
+      }
+
+      fetch('api/get_nurses.php')
+        .then(res => res.json())
+        .then(response => {
+          if(response.status === 'success') {
+            window.allNurses = response.data;
+            applyFilters(); 
+          } else {
+            const grid = document.getElementById('nurseGrid');
+            if(grid) grid.innerHTML = '<div class="col-12 text-center py-5 text-danger fw-bold">Failed to load data.</div>';
+          }
+        })
+        .catch(err => console.error(err));
+
+      document.body.addEventListener('input', function(e) {
+          if(e.target.id === 'nurseSearch') applyFilters();
+      });
+      document.body.addEventListener('change', function(e) {
+          if(['specialtyFilter', 'availFilter', 'sortSelect'].includes(e.target.id)) applyFilters();
+      });
+      document.body.addEventListener('click', function(e) {
+          if(e.target.id === 'clearFiltersBtn') {
+              document.getElementById('nurseSearch').value = '';
+              document.getElementById('specialtyFilter').value = '';
+              document.getElementById('availFilter').value = '';
+              document.getElementById('sortSelect').value = '';
+              applyFilters();
+          }
+          
+          if(e.target.closest('.lang-btn')) {
+              setTimeout(() => {
+                  applyFilters();
+              }, 400);
+          }
+      });
+    });
+  </script>
+</body>
+</html>

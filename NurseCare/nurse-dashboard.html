@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nurse Dashboard – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body id="page-nurse-dashboard" style="background:var(--light-bg); display: flex; flex-direction: column; min-height: 100vh;">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration: none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">☰</button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav_about">About</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 ms-3">
+          <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
+            <span class="lang-flag" aria-hidden="true">🌐</span>
+            <span data-i18n="nav_lang">العربية</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div style="background:linear-gradient(135deg,#0f766e,#14b8a6);color:white;padding:40px 0 30px;">
+    <div class="container">
+      <h1 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:2rem;" data-i18n="nurse_dash_h1">Nurse Dashboard</h1>
+      <p style="opacity:.9;margin:0;" data-i18n="nurse_dash_sub">Manage your requests and profile</p>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="bg-white-card p-4 d-flex justify-content-between align-items-center flex-wrap gap-4 shadow-sm" style="border-radius:16px; border-left: 5px solid #0f766e;">
+      <div class="d-flex align-items-center gap-4 flex-wrap">
+        <div id="dashProfileImgContainer"></div>
+        <div>
+          <h3 id="profileName" class="mb-1 fw-bold text-dark">Welcome!</h3>
+          <p class="text-muted mb-1" id="profileEmail">Loading...</p>
+          <span class="badge bg-success">Registered Nurse</span>
+        </div>
+      </div>
+      
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary fw-bold" id="openEditModalBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal" data-i18n="nurse_edit_profile">تعديل الملف الشخصي</button>
+        <button class="btn btn-outline-danger fw-bold" onclick="dashboardLogout()" data-i18n="dash_logout_btn">تسجيل خروج</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-4 flex-grow-1">
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3"><div class="stat-card blue"><div class="stat-value" id="statTotal">0</div><div class="stat-label" data-i18n="nurse_stat_total">Total Patients</div><div class="stat-icon">👥</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card amber"><div class="stat-value" id="statPending">0</div><div class="stat-label" data-i18n="nurse_stat_pending">New Requests</div><div class="stat-icon">🔔</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card green"><div class="stat-value" id="statCompleted">0</div><div class="stat-label" data-i18n="nurse_stat_completed">Visits Completed</div><div class="stat-icon">✅</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card purple"><div class="stat-value">4.9</div><div class="stat-label" data-i18n="nurse_stat_rating">Avg Rating</div><div class="stat-icon">⭐</div></div></div>
+    </div>
+
+    <div class="bg-white-card mb-4 shadow-sm" style="border-radius:16px;">
+      <h5 class="fw-bold mb-3 text-dark p-3 border-bottom" data-i18n="nurse_req_h">My Patient Requests</h5>
+      <div class="table-responsive p-3 pt-0">
+        <table class="table table-hover align-middle">
+          <thead style="background:var(--light-bg);">
+            <tr>
+              <th data-i18n="dash_th_id">ID</th>
+              <th data-i18n="nurse_th_patient">PATIENT NAME</th>
+              <th data-i18n="nurse_th_service">SERVICE NEEDED</th>
+              <th data-i18n="dash_th_date">DATE</th>
+              <th data-i18n="dash_th_time">TIME</th>
+              <th data-i18n="dash_th_status">STATUS</th>
+            </tr>
+          </thead>
+          <tbody id="nurseRequestsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div> 
+
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-white" style="border-radius: 16px; border: none;">
+        <div class="modal-header" style="background: var(--light-bg); border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0;">
+          <h5 class="modal-title fw-bold text-dark" data-i18n="ep_title">تعديل الملف الشخصي بالكامل</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="editProfileForm">
+            
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_first">الاسم الأول</label>
+                <input type="text" class="form-control" id="editFirstName" name="first_name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_last">اسم العائلة</label>
+                <input type="text" class="form-control" id="editLastName" name="last_name">
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_email">البريد الإلكتروني</label>
+                <input type="email" class="form-control" id="editEmail" name="email">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_phone">رقم الهاتف</label>
+                <input type="tel" class="form-control" id="editPhone" name="phone">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-muted small" data-i18n="ep_pass">كلمة المرور الجديدة</label>
+              <input type="password" class="form-control" id="editPassword" name="password" data-i18n-placeholder="ep_pass_ph" placeholder="اتركه فارغاً لعدم تغيير الباسوورد">
+            </div>
+
+            <hr style="border-color: var(--border);">
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-muted small" data-i18n="ep_bio">نبذة عنك (Bio)</label>
+              <textarea class="form-control" id="bioInput" name="bio" rows="3"></textarea>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <div class="col-md-5">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_img">الصورة الشخصية الحالية</label>
+                <div id="profilePreviewContainer" class="mb-3 d-flex align-items-center justify-content-center" style="min-height: 100px;"></div>
+                <input type="file" class="form-control form-control-sm" id="profileImgInput" name="profile_img" accept="image/*">
+                <small class="text-muted" style="font-size:0.75rem;" data-i18n="ep_img_hint">اختر صورة جديدة لتغييرها</small>
+              </div>
+
+              <div class="col-md-7">
+                <label class="form-label fw-bold text-muted small" data-i18n="ep_album">ألبوم الأعمال والشهادات</label>
+                <div id="albumPreviewContainer" class="mb-3 d-flex flex-wrap gap-2 align-items-center" style="min-height: 100px;"></div>
+                <input type="file" class="form-control form-control-sm" id="albumImgInput" name="album_imgs[]" accept="image/*" multiple>
+                <small class="text-muted" style="font-size:0.75rem;" data-i18n="ep_album_hint">يمكنك تحديد أكثر من صورة معاً</small>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2" style="font-size: 1.1rem; border-radius:8px;" id="saveProfileBtn" data-i18n="ep_save">حفظ التعديلات</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer style="margin-top: auto; background:var(--white); padding: 20px 0; border-top:1px solid var(--border); text-align:center;">
+    <div class="container small text-muted" data-i18n="nurse_footer_copy">
+      © 2026 NurseCare Professional Portal. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+
+  <script>
+    // دالة تسجيل الخروج المربوطة بالزرار الأحمر
+    window.dashboardLogout = function() {
+        const msg = (typeof window.t === 'function') ? window.t('confirm_logout') || 'Are you sure you want to log out?' : 'Are you sure you want to log out?';
+        if(confirm(msg)) {
+            localStorage.removeItem('nc_active_user');
+            window.location.href = 'index.html';
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const activeUser = JSON.parse(localStorage.getItem('nc_active_user'));
+      if (!activeUser || activeUser.account_type !== 'nurse') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // رسم الكارت الأساسي
+      const fullName = activeUser.first_name ? (activeUser.first_name + ' ' + activeUser.last_name) : activeUser.name;
+      document.getElementById('profileName').textContent = 'Dr. ' + fullName;
+      document.getElementById('profileEmail').textContent = activeUser.email;
+
+      let initials = 'U';
+      let nameParts = fullName.trim().split(/\s+/).filter(n => n.length > 0);
+      if (nameParts.length >= 2) initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+      else if (fullName.length >= 2) initials = fullName.substring(0, 2).toUpperCase();
+
+      let dbImage = activeUser.profile_image || activeUser.img || ''; 
+      const imgContainer = document.getElementById('dashProfileImgContainer');
+      let fallbackStyle = `width: 80px; height: 80px; background: linear-gradient(135deg, #0f766e, #14b8a6); color: white; border-radius: 50%; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; border: 3px solid #14b8a6; box-shadow: 0 4px 10px rgba(0,0,0,0.1); letter-spacing:1px;`;
+
+      if (dbImage && dbImage.trim() !== '' && !dbImage.includes('default-avatar') && dbImage !== 'null') {
+          imgContainer.innerHTML = `
+            <img src="${dbImage}" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #14b8a6; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="${fallbackStyle} display:none;">${initials}</div>
+          `;
+      } else {
+          imgContainer.innerHTML = `<div style="${fallbackStyle} display:flex;">${initials}</div>`;
+      }
+
+      // جلب الحجوزات
+      fetch(`api/get_nurse_bookings.php?nurse_id=${activeUser.id}`)
+        .then(res => res.json())
+        .then(response => {
+          const tbody = document.getElementById('nurseRequestsTable'); 
+          if(response.status === 'success' && response.data.length > 0) {
+            document.getElementById('statTotal').textContent = response.data.length;
+            let pendingCount = 0, completedCount = 0;
+            tbody.innerHTML = '';
+            response.data.forEach(b => {
+              if(b.status === 'completed') completedCount++;
+              if(b.status === 'pending') pendingCount++;
+              
+              let statusBadge = `<span class="badge bg-warning text-dark">Pending</span>`;
+              if(b.status === 'confirmed') statusBadge = `<span class="badge bg-success">Confirmed</span>`;
+              if(b.status === 'completed') statusBadge = `<span class="badge bg-secondary">Completed</span>`;
+
+              tbody.innerHTML += `<tr><td class="fw-bold text-primary">#REQ-${b.id}</td><td class="fw-bold">${b.patient_name}</td><td>${b.medical_need}</td><td>${b.pref_date}</td><td>${b.pref_time}</td><td>${statusBadge}</td></tr>`;
+            });
+            document.getElementById('statPending').textContent = pendingCount;
+            document.getElementById('statCompleted').textContent = completedCount;
+          } else {
+            if(tbody) tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">No requests found.</td></tr>`;
+          }
+        });
+
+      // ==========================================
+      // سحر المودال (الصور والبيانات الشفافة)
+      // ==========================================
+      let retainedAlbum = [];
+      let removeProfileImg = false;
+
+      document.getElementById('openEditModalBtn').addEventListener('click', function () {
+          const au = JSON.parse(localStorage.getItem('nc_active_user'));
+          if(!au) return;
+
+          let fName = au.first_name || '';
+          let lName = au.last_name || '';
+          if(!fName && au.name) {
+              let parts = au.name.trim().split(/\s+/);
+              fName = parts[0];
+              lName = parts.slice(1).join(' ');
+          }
+
+          document.getElementById('editFirstName').placeholder = fName || 'الاسم الأول';
+          document.getElementById('editLastName').placeholder = lName || 'اسم العائلة';
+          document.getElementById('editEmail').placeholder = au.email || 'البريد الإلكتروني';
+          document.getElementById('editPhone').placeholder = au.phone || 'رقم الهاتف';
+          
+          document.getElementById('editFirstName').value = '';
+          document.getElementById('editLastName').value = '';
+          document.getElementById('editEmail').value = '';
+          document.getElementById('editPhone').value = '';
+          document.getElementById('editPassword').value = ''; 
+          document.getElementById('bioInput').value = au.bio || ''; 
+          
+          document.getElementById('profileImgInput').value = '';
+          document.getElementById('albumImgInput').value = '';
+
+          const profContainer = document.getElementById('profilePreviewContainer');
+          removeProfileImg = false; 
+          
+          let hasProfilePic = au.profile_image && au.profile_image !== 'null' && au.profile_image !== 'undefined' && au.profile_image.trim() !== '' && !au.profile_image.includes('default-avatar');
+
+          if (hasProfilePic) {
+              profContainer.innerHTML = `
+                  <div class="position-relative d-inline-block">
+                      <img src="${au.profile_image}" class="rounded-circle border shadow-sm" style="width:90px;height:90px;object-fit:cover;border-color:var(--border)!important;" onerror="this.src='assets/default-avatar.png'">
+                      <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle d-flex align-items-center justify-content-center" style="width:24px;height:24px;padding:0;font-size:12px;box-shadow:0 2px 4px rgba(0,0,0,0.2);" onclick="removeProfImgPreview()" title="حذف الصورة">✕</button>
+                  </div>
+              `;
+          } else {
+              profContainer.innerHTML = `
+                  <div class="position-relative d-inline-block opacity-50">
+                      <img src="assets/default-avatar.png" class="rounded-circle border shadow-sm" style="width:90px;height:90px;object-fit:cover;border-color:var(--border)!important;" alt="Default Avatar">
+                  </div>
+              `;
+          }
+
+          retainedAlbum = (au.album_images && au.album_images !== 'null') ? au.album_images.split(',').filter(x => x.trim() !== '') : [];
+          renderAlbumPreview();
+      });
+
+      window.removeProfImgPreview = function() {
+          document.getElementById('profilePreviewContainer').innerHTML = `
+              <div class="position-relative d-inline-block opacity-50">
+                  <img src="assets/default-avatar.png" class="rounded-circle border shadow-sm" style="width:90px;height:90px;object-fit:cover;border-color:var(--border)!important;">
+              </div>
+              <div class="text-danger small fw-bold mt-2">سيتم الحذف عند الحفظ</div>
+          `;
+          removeProfileImg = true;
+      };
+
+      window.removeAlbumImg = function(index) {
+          retainedAlbum.splice(index, 1);
+          renderAlbumPreview();
+      };
+
+      function renderAlbumPreview() {
+          const container = document.getElementById('albumPreviewContainer');
+          
+          if(retainedAlbum.length === 0) {
+              const emptyRect = `
+                  <div onclick="document.getElementById('albumImgInput').click()" style="width: 80px; height: 80px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-align: center; transition: 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#cbd5e1'">
+                      <span class="text-muted" style="font-size: 0.75rem; font-weight: 700;" data-i18n="click_to_add">Click<br>to add</span>
+                  </div>`;
+              container.innerHTML = `<div class="d-flex gap-2">${emptyRect}${emptyRect}${emptyRect}</div>`;
+              if(typeof window.translatePage === 'function') window.translatePage(localStorage.getItem('nc_lang') || 'en');
+              return;
+          }
+
+          container.innerHTML = retainedAlbum.map((img, idx) => `
+              <div class="position-relative d-inline-block">
+                  <img src="${img}" class="rounded border shadow-sm" style="width:80px;height:80px;object-fit:cover;border-color:var(--border)!important;" onerror="this.src='assets/default-avatar.png'">
+                  <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle d-flex align-items-center justify-content-center" style="width:22px;height:22px;padding:0;font-size:10px;box-shadow:0 2px 4px rgba(0,0,0,0.2);" onclick="removeAlbumImg(${idx})" title="إزالة من الألبوم">✕</button>
+              </div>
+          `).join('');
+      }
+
+      // إرسال الفورم
+      const editForm = document.getElementById('editProfileForm');
+      if (editForm) {
+          editForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              const btn = document.getElementById('saveProfileBtn');
+              btn.innerHTML = 'جاري الحفظ والرفع... ⏳';
+              btn.disabled = true;
+
+              const au = JSON.parse(localStorage.getItem('nc_active_user'));
+              const formData = new FormData(this);
+              formData.append('user_id', au.id);
+              formData.append('remove_profile_img', removeProfileImg ? 'true' : 'false');
+              formData.append('retained_album', retainedAlbum.join(','));
+
+              fetch('api/update_profile.php', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(res => res.json())
+              .then(data => {
+                  if(data.status === 'success') {
+                      if(data.user && data.user.id) localStorage.setItem('nc_active_user', JSON.stringify(data.user));
+                      alert('✅ ' + data.message);
+                      location.reload(); 
+                  } else {
+                      alert('❌ ' + data.message);
+                      btn.innerHTML = 'حفظ التعديلات';
+                      btn.disabled = false;
+                  }
+              })
+              .catch(err => {
+                  alert('❌ خطأ في الاتصال بالسيرفر. تأكد من وجود مجلد uploads ومن قاعدة البيانات.');
+                  btn.innerHTML = 'حفظ التعديلات';
+                  btn.disabled = false;
+              });
+          });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body id="page-login" style="background:var(--light-bg); display: flex; flex-direction: column; min-height: 100vh;">
+
+  <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration:none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
+          <span class="lang-flag" aria-hidden="true">🌐</span>
+          <span data-i18n="nav_lang">العربية</span>
+        </button>
+        <a href="login.html" class="btn btn-primary" data-i18n="nav_login">Log In</a>
+        <a href="register.html" class="btn btn-outline-primary" data-i18n="nav_signup">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5 flex-grow-1 d-flex align-items-center justify-content-center">
+    <div class="row justify-content-center w-100">
+      <div class="col-md-6 col-lg-4">
+
+        <div class="text-center mb-4">
+          <div style="width:64px;height:64px;background:linear-gradient(135deg,#1a7fc1,#135d90);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem;" aria-hidden="true">🏥</div>
+          <h2 style="font-family:'Nunito',sans-serif;font-weight:800;" data-i18n="login_welcome">Welcome Back</h2>
+          <p class="text-muted" data-i18n="login_sub">Sign in to your NurseCare account</p>
+        </div>
+
+        <div class="form-card bg-white p-4 shadow-sm" style="border-radius: 16px; border: 1px solid var(--border);">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label fw-semibold text-muted small" data-i18n="login_email">Email Address</label>
+              <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label fw-semibold text-muted small" data-i18n="login_pw">Password</label>
+              <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label text-muted small" for="rememberMe" data-i18n="login_remember">Remember me</label>
+              </div>
+              <a href="#" class="small text-primary text-decoration-none fw-semibold" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-i18n="login_forgot">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="font-size:1.05rem; border-radius: 8px;" data-i18n="login_btn">Log In</button>
+          </form>
+        </div>
+
+        <p class="text-center mt-4 text-muted small">
+          <span data-i18n="login_no_acc">Don't have an account?</span> <a href="register.html" class="fw-bold text-primary text-decoration-none" data-i18n="login_signup">Sign up free</a>
+        </p>
+
+        <div class="d-flex align-items-center gap-3 my-4">
+          <hr style="flex:1;border-color:var(--border);">
+          <span class="text-muted small fw-semibold" data-i18n="login_or">or continue with</span>
+          <hr style="flex:1;border-color:var(--border);">
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-secondary w-100 small fw-semibold" onclick="showToast(typeof window.t === 'function' ? window.t('toast_social') : 'Social login not available.')"><span aria-hidden="true">🔵</span> <span data-i18n="btn_google">Google</span></button>
+          <button type="button" class="btn btn-outline-secondary w-100 small fw-semibold" onclick="showToast(typeof window.t === 'function' ? window.t('toast_social') : 'Social login not available.')"><span aria-hidden="true">🔷</span> <span data-i18n="btn_facebook">Facebook</span></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 16px; border: none; background: var(--white);">
+        <div class="modal-header" style="background: var(--light-bg); border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0;">
+          <h5 class="modal-title fw-bold text-dark" data-i18n="forgot_title">استعادة كلمة المرور</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="forgotPasswordForm">
+            <p class="text-muted small mb-4" data-i18n="forgot_sub">أدخل بريدك الإلكتروني المسجل لدينا وكلمة المرور الجديدة التي تريدها.</p>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold text-muted small" data-i18n="forgot_email_lbl">البريد الإلكتروني</label>
+              <input type="email" class="form-control" id="resetEmail" required placeholder="you@example.com">
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold text-muted small" data-i18n="forgot_new_pw_lbl">كلمة المرور الجديدة</label>
+              <input type="password" class="form-control" id="resetNewPw" required placeholder="••••••••" minlength="6">
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold text-muted small" data-i18n="forgot_confirm_pw_lbl">تأكيد كلمة المرور الجديدة</label>
+              <input type="password" class="form-control" id="resetConfirmPw" required placeholder="••••••••" minlength="6">
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2" style="border-radius: 8px;" id="resetBtn" data-i18n="forgot_btn">تغيير كلمة المرور</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top:auto; padding: 20px 0; border-top: 1px solid var(--border); background: white;">
+    <div class="container text-center text-muted small">
+      © 2026 NurseCare — <a href="index.html" class="text-decoration-none fw-semibold text-primary" data-i18n="nav_home">Go to Home</a>
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const notify = typeof showToast === 'function' ? showToast : alert;
+
+      // --- كود تسجيل الدخول ---
+      const loginForm = document.getElementById('loginForm');
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = document.getElementById('loginEmail').value;
+          const pw = document.getElementById('loginPassword').value;
+
+          fetch('api/login.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: pw })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(data.status === 'success') {
+              localStorage.setItem('nc_active_user', JSON.stringify(data.user));
+              notify('✅ Login successful!');
+              setTimeout(() => { 
+                if(data.user.account_type === 'nurse') {
+                  window.location.href = 'nurse-dashboard.html';
+                } else {
+                  window.location.href = 'dashboard.html'; 
+                }
+              }, 1500);
+            } else {
+              notify('❌ ' + data.message); 
+            }
+          })
+          .catch(err => notify('❌ Server connection error!'));
+        });
+      }
+
+      // --- كود استعادة كلمة المرور ---
+      const forgotForm = document.getElementById('forgotPasswordForm');
+      if (forgotForm) {
+        forgotForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('resetEmail').value;
+          const newPw = document.getElementById('resetNewPw').value;
+          const confirmPw = document.getElementById('resetConfirmPw').value;
+          const btn = document.getElementById('resetBtn');
+
+          // التحقق من تطابق الباسوورد
+          if(newPw !== confirmPw) {
+            notify('❌ كلمة المرور غير متطابقة!');
+            return;
+          }
+
+          btn.innerHTML = 'جاري التغيير... ⏳';
+          btn.disabled = true;
+
+          // إرسال الطلب للـ API
+          fetch('api/reset_password.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, new_password: newPw })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(data.status === 'success') {
+              notify('✅ ' + data.message);
+              // قفل النافذة وتفريغ الخانات بعد النجاح
+              setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                modal.hide();
+                forgotForm.reset();
+                btn.innerHTML = 'تغيير كلمة المرور';
+                btn.disabled = false;
+              }, 1500);
+            } else {
+              notify('❌ ' + data.message);
+              btn.innerHTML = 'تغيير كلمة المرور';
+              btn.disabled = false;
+            }
+          })
+          .catch(err => {
+            notify('❌ خطأ في الاتصال بالسيرفر!');
+            btn.innerHTML = 'تغيير كلمة المرور';
+            btn.disabled = false;
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

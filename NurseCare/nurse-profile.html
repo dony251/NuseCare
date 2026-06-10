@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nurse Profile – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body id="page-profile" style="background:var(--light-bg); display: flex; flex-direction: column; min-height: 100vh;">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration:none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
+          <span class="lang-flag" aria-hidden="true">🌐</span>
+          <span data-i18n="nav_lang">العربية</span>
+        </button>
+        <a href="nurses.html" class="btn btn-outline-primary" data-i18n="nav_back_nurses">العودة للممرضين</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4 flex-grow-1">
+    
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb" style="font-size: .9rem;">
+        <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted" data-i18n="bread_home">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="nurses.html" class="text-decoration-none text-muted" data-i18n="bread_find">ابحث عن ممرض</a></li>
+        <li class="breadcrumb-item active fw-bold text-primary" id="breadName">جاري التحميل...</li>
+      </ol>
+    </nav>
+
+    <div class="row g-4 flex-lg-row-reverse"> 
+      
+      <div class="col-lg-8">
+        
+        <div class="card border-0 mb-4 overflow-hidden" style="border-radius: 16px; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);">
+          <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); padding: 40px 30px; color: white;">
+            <div class="d-flex align-items-center gap-4 flex-wrap">
+              <div id="profImgContainer">
+                <img id="profImg" src="" alt="Nurse" style="width:120px; height:120px; border-radius:16px; object-fit:cover; border:4px solid white; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+              </div>
+              <div>
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <h2 id="profName" class="fw-bold mb-0 text-white" style="font-family: 'Cairo', sans-serif;">جاري التحميل...</h2>
+                  <span id="profStatus" class="badge bg-success" style="font-size: 0.8rem; padding: 6px 10px;">Available</span>
+                </div>
+                <h5 id="profSpec" class="mb-3 text-white-50" data-i18n="prof_spec_label">التخصص</h5>
+                <div class="d-flex gap-4 small fw-semibold flex-wrap">
+                  <span>⭐ <span id="profRating">4.8</span> / 5.0 <span data-i18n="prof_excellent_rating">(تقييمات ممتازة)</span></span>
+                  <span data-i18n="prof_home_visit">📍 متاح للزيارات المنزلية</span>
+                  <span data-i18n="prof_certified_exp">⏱️ خبرة معتمدة</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white-card p-4 mb-4" style="border-radius:16px; border:1px solid var(--border);">
+          <h5 class="fw-bold mb-3 text-dark" data-i18n="prof_bio_h">نبذة عن الممرض</h5>
+          <p id="profBio" class="text-muted" style="line-height: 1.8; font-size: 1.05rem;">
+            جاري تحميل البيانات...
+          </p>
+        </div>
+
+        <div class="bg-white-card p-4 mb-4" style="border-radius:16px; border:1px solid var(--border);">
+          <h5 class="fw-bold mb-3 text-dark" data-i18n="prof_skills_h">المهارات والخدمات</h5>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge bg-light text-dark border p-2 fw-normal" data-i18n="skill_postop">التعافي بعد الجراحة</span>
+            <span class="badge bg-light text-dark border p-2 fw-normal" data-i18n="skill_catheter">العناية بالقسطرة</span>
+            <span class="badge bg-light text-dark border p-2 fw-normal" data-i18n="skill_vitals">مراقبة العلامات الحيوية</span>
+            <span class="badge bg-light text-dark border p-2 fw-normal" data-i18n="skill_pain">إدارة الألم</span>
+            <span class="badge bg-light text-dark border p-2 fw-normal" data-i18n="skill_injection">إعطاء الحقن</span>
+          </div>
+        </div>
+
+        <div class="bg-white-card p-4 mb-4" style="border-radius:16px; border:1px solid var(--border);">
+          <h5 class="fw-bold mb-3 text-dark" data-i18n="prof_contact_h">معلومات التواصل</h5>
+          <div class="d-flex flex-column gap-2 text-muted">
+            <div><strong class="text-dark" data-i18n="prof_phone">رقم الهاتف:</strong> <span id="profPhone" dir="ltr">جاري التحميل...</span></div>
+            <div><strong class="text-dark" data-i18n="prof_email">البريد الإلكتروني:</strong> <span id="profEmail">جاري التحميل...</span></div>
+          </div>
+        </div>
+
+        <div class="bg-white-card p-4" style="border-radius:16px; border:1px solid var(--border);">
+          <h5 class="fw-bold mb-3 text-dark" data-i18n="prof_album_h">ألبوم الأعمال والشهادات</h5>
+          <div class="row g-3" id="profAlbum">
+            <div class="col-12 text-muted small" data-i18n="prof_no_album">لا توجد صور في الألبوم حالياً.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-4">
+        <div class="bg-white-card p-4" style="position: sticky; top: 90px; border-radius:16px; border:1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+          <h5 class="fw-bold text-center text-dark mb-1" data-i18n="prof_book_h">احجز هذا الممرض</h5>
+          <p class="text-center text-muted small mb-4" data-i18n="prof_book_sub">متاح للزيارات المنزلية في منطقتك</p>
+          
+          <div class="d-flex justify-content-between align-items-center mb-4 p-3" style="background: var(--light-bg); border-radius: 12px;">
+            <span class="text-muted fw-semibold" data-i18n="prof_hourly">السعر بالساعة</span>
+            <span class="fw-bold text-primary fs-4"><span data-i18n="currency_egp">ج.م</span> <span id="profPrice">--</span></span>
+          </div>
+
+          <a href="#" id="profBookBtn" class="btn btn-primary w-100 py-3 mb-3 fw-bold fs-5" style="border-radius: 10px;" data-i18n="prof_book_btn">احجز الآن</a>
+          <button class="btn btn-outline-secondary w-100 py-2 fw-bold mb-4" style="border-radius: 10px;" data-i18n="prof_msg_btn">💬 إرسال رسالة</button>
+
+          <h6 class="fw-bold text-dark mb-3 text-center" data-i18n="prof_avail_h">أيام التوفر</h6>
+          <div class="row g-2 mb-4 text-center" style="font-size: 0.85rem;">
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_sat">السبت</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_sun">الأحد</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_mon">الإثنين</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_tue">الثلاثاء</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_wed">الأربعاء</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded bg-light text-primary fw-bold"><span data-i18n="prof_thu">الخميس</span> <br>✓</div></div>
+            <div class="col-4"><div class="p-2 border rounded text-muted" style="background:#f1f5f9; opacity:0.6;"><span data-i18n="prof_fri">الجمعة</span> <br>—</div></div>
+          </div>
+
+          <ul class="list-unstyled small text-muted mb-0">
+            <li class="mb-2" data-i18n="prof_feat_1">🔒 تم فحص السجل بنجاح</li>
+            <li class="mb-2" data-i18n="prof_feat_2">📜 مرخص ومعتمد طبياً</li>
+            <li class="mb-2" data-i18n="prof_feat_3">💳 تسعير شفاف وواضح</li>
+            <li data-i18n="prof_feat_4">🌟 محترف بتقييم عالي</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="margin-top:auto; background:white; border-top:1px solid var(--border);">
+    <div class="container text-center py-4">
+      <p class="text-muted small mb-0" data-i18n="footer_copy_short">© 2026 NurseCare. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. التقاط الـ ID الخاص بالممرض من رابط الصفحة
+      const urlParams = new URLSearchParams(window.location.search);
+      const nurseId = urlParams.get('id');
+
+      // لو مفيش ID، رجعه لصفحة الممرضين
+      if(!nurseId) {
+          window.location.href = 'nurses.html';
+          return;
+      }
+
+      // 2. سحب بيانات الممرضين والبحث عن الممرض المطلوب
+      fetch('api/get_nurses.php')
+      .then(res => res.json())
+      .then(response => {
+          if(response.status === 'success') {
+              const nurse = response.data.find(n => n.id == nurseId);
+    
+              if(nurse) {
+                  // تعبئة البيانات الأساسية
+                  document.title = nurse.name + " - NurseCare";
+                  document.getElementById('breadName').textContent = nurse.name;
+                  document.getElementById('profName').textContent = nurse.name;
+                  document.getElementById('profSpec').textContent = nurse.spec;
+                  document.getElementById('profPrice').textContent = nurse.price;
+                  document.getElementById('profBio').textContent = nurse.desc || 'لم تتم كتابة نبذة شخصية بعد.';
+                  document.getElementById('profRating').textContent = nurse.rating || 4.8;
+                  
+                  // تعبئة معلومات التواصل
+                  document.getElementById('profPhone').textContent = nurse.phone || 'غير متوفر';
+                  document.getElementById('profEmail').textContent = nurse.email || 'غير متوفر';
+
+                  // 🌟 رسم ألبوم الصور
+                  const albumContainer = document.getElementById('profAlbum');
+                  if (nurse.album_images && nurse.album_images.trim() !== '') {
+                      albumContainer.innerHTML = ''; // تفريغ الرسالة الافتراضية
+                      const imagesArray = nurse.album_images.split(',');
+                      imagesArray.forEach(imgPath => {
+                          if(imgPath.trim() !== '') {
+                              albumContainer.innerHTML += `
+                                <div class="col-6 col-md-4">
+                                  <img src="${imgPath}" class="img-fluid rounded shadow-sm" style="height: 120px; width: 100%; object-fit: cover; border: 1px solid var(--border); cursor: pointer;" onclick="window.open('${imgPath}', '_blank')" title="اضغط لتكبير الصورة">
+                                </div>
+                              `;
+                          }
+                      });
+                  }
+
+                  // 🌟 اللوجيك الذكي للصورة الشخصية
+                  let nameParts = nurse.name.trim().split(' ').filter(n => n.length > 0);
+                  let initials = 'U';
+                  if (nameParts.length >= 2) {
+                      initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+                  } else if (nurse.name.length >= 2) {
+                      initials = nurse.name.substring(0, 2).toUpperCase();
+                  }
+
+                  let dbImage = nurse.profile_image || nurse.img || ''; 
+                  const imgEl = document.getElementById('profImg');
+                  
+                  if (dbImage && dbImage.trim() !== '' && !dbImage.includes('default-avatar') && dbImage !== 'null') {
+                      imgEl.src = dbImage;
+                  } else {
+                      const bgColors = ['#dbeafe', '#ccfbf1', '#fef3c7', '#f3e8ff', '#ffe4e6'];
+                      const txtColors = ['#1e40af', '#0f766e', '#b45309', '#6b21a8', '#b91c1c'];
+                      const colorIdx = nurse.id % bgColors.length;
+                      
+                      const avatarDiv = document.createElement('div');
+                      avatarDiv.style.cssText = `width:120px; height:120px; border-radius:16px; background-color:${bgColors[colorIdx]}; color:${txtColors[colorIdx]}; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:900; border:4px solid white; box-shadow:0 4px 10px rgba(0,0,0,0.2);`;
+                      avatarDiv.textContent = initials;
+                      
+                      imgEl.parentNode.replaceChild(avatarDiv, imgEl);
+                  }
+                  
+                  // تلوين حالة التوفر وتجهيز زر الحجز
+                  const statusBadge = document.getElementById('profStatus');
+                  const bookBtn = document.getElementById('profBookBtn');
+
+                  if(nurse.status === 'Available') {
+                      statusBadge.className = 'badge bg-success';
+                      statusBadge.textContent = (typeof window.t === 'function') ? window.t('status_avail') || 'متاح الآن' : 'متاح الآن';
+                      statusBadge.setAttribute('data-i18n', 'status_avail');
+                      bookBtn.href = `request.html?nurse_id=${nurse.id}&name=${encodeURIComponent(nurse.name)}&spec=${encodeURIComponent(nurse.spec)}`;
+                  } else {
+                      statusBadge.className = 'badge bg-secondary';
+                      statusBadge.textContent = (typeof window.t === 'function') ? window.t('status_busy') || 'غير متاح (مشغول)' : 'غير متاح (مشغول)';
+                      statusBadge.setAttribute('data-i18n', 'status_busy');
+
+                      bookBtn.classList.add('disabled');
+                      bookBtn.classList.replace('btn-primary', 'btn-secondary');
+                      bookBtn.textContent = (typeof window.t === 'function') ? window.t('status_busy_btn') || 'الممرض غير متاح حالياً' : 'الممرض غير متاح حالياً';
+                      bookBtn.setAttribute('data-i18n', 'status_busy_btn');
+                  }
+
+                  // تحديث الترجمة للنصوص المضافة حديثاً
+                  if(typeof window.translatePage === 'function') {
+                      window.translatePage(localStorage.getItem('nc_lang') || 'en');
+                  }
+
+              } else {
+                  alert("لم يتم العثور على بيانات الممرض!");
+                  window.location.href = 'nurses.html';
+              }
+          }
+      })
+      .catch(err => console.error("Error fetching nurse data:", err));
+    });
+  </script>
+</body>
+</html>

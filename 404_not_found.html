@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body id="page-404" style="background:var(--light-bg); display:flex; flex-direction:column; min-height:100vh;">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration: none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">☰</button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
+          <li class="nav-item"><a class="nav-link" href="search.html" data-i18n="nav_search">Search</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav_about">About</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 ms-3">
+          <button class="lang-btn" onclick="toggleLanguage()">
+            <span class="lang-flag" aria-hidden="true">🌐</span>
+            <span data-i18n="nav_lang">العربية</span>
+          </button>
+          <a href="login.html" class="btn btn-outline-primary" data-i18n="nav_login">Log In</a>
+          <a href="register.html" class="btn btn-primary" data-i18n="nav_signup">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 py-5 text-center">
+    <div class="bg-white-card p-5" style="max-width: 600px; width: 100%;">
+      
+      <div style="font-size: 4rem; margin-bottom: 0.5rem;" aria-hidden="true">🩺</div>
+      <h1 style="font-family:'Outfit',sans-serif; font-weight:800; font-size:5rem; color:var(--primary); line-height:1; margin-bottom:1rem; text-shadow: 0 10px 20px rgba(37,99,235,0.15);" data-i18n="error_404">404</h1>
+      
+      <h3 style="font-weight:700; margin-bottom:1.5rem;" data-i18n="error_title">Page Not Found</h3>
+      <div class="alert mb-4" style="background:#f0fdfa; border:1px solid #ccfbf1; color:#0f766e; border-radius:12px; font-size:0.95rem; line-height:1.7;">
+        <span data-i18n="error_desc">Oops! It looks like you've wandered off the chart. Please note that NurseCare is currently a university demo project under development, so some links or pages might not exist yet.</span>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="index.html" class="btn btn-primary px-4 py-2" data-i18n="error_btn_home">Back to Homepage</a>
+        <a href="javascript:history.back()" class="btn btn-outline-secondary px-4 py-2" data-i18n="error_btn_back">Go Back</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="margin-top:auto;">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand mb-2">Nurse<span>Care</span></div>
+          <p style="font-size:.9rem;line-height:1.7;" data-i18n="why_p">Professional home nursing services connecting patients with certified caregivers. Your health, our priority.</p>
+        </div>
+        <div class="col-md-2">
+          <h6 data-i18n="footer_nav">Navigation</h6>
+          <ul class="list-unstyled">
+            <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+            <li><a href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
+            <li><a href="about.html" data-i18n="nav_about">About</a></li>
+            <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 data-i18n="footer_specs">Specialties</h6>
+          <ul class="list-unstyled">
+            <li><a href="search.html?q=elderly" data-i18n="spec_elderly">Elderly Care</a></li>
+            <li><a href="search.html?q=post-op" data-i18n="spec_post_op">Post-Op Care</a></li>
+            <li><a href="search.html?q=pediatric" data-i18n="spec_pediatric">Pediatric Care</a></li>
+            <li><a href="search.html?q=chronic" data-i18n="spec_chronic">Chronic Disease</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 data-i18n="footer_account">Account</h6>
+          <ul class="list-unstyled">
+            <li><a href="login.html" data-i18n="nav_login">Log In</a></li>
+            <li><a href="register.html" data-i18n="nav_signup">Sign Up</a></li>
+            <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+          </ul>
+          <div class="mt-3" style="font-size:.85rem;" dir="ltr">📧 support@nursecare.com<br>📞 1-800-NURSE-00</div>
+        </div>
+      </div>
+      <div class="footer-bottom text-center" data-i18n="footer_copy">
+        © 2026 NurseCare. All rights reserved. | Built by Thebes Academy students.
+      </div>
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+</body>
+</html>

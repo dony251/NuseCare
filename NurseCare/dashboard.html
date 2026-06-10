@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – NurseCare</title>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body id="page-dashboard" style="background:var(--light-bg); display: flex; flex-direction: column; min-height: 100vh;">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration:none;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
+          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
+          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">☰</button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav_about">About</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 ms-3">
+          <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
+            <span class="lang-flag" aria-hidden="true">🌐</span>
+            <span data-i18n="nav_lang">العربية</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:40px 0 30px;">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <h1 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:2rem;" data-i18n="dash_h1">Patient Dashboard</h1>
+        <p style="opacity:.88;margin:0;" data-i18n="dash_sub">Track and manage all your nursing service requests</p>
+      </div>
+      <a href="nurses.html" class="btn btn-accent px-4" data-i18n="dash_book_btn">+ Book New Nurse</a>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="bg-white-card p-4 d-flex justify-content-between align-items-center gap-4 flex-wrap shadow-sm" style="border-radius:16px; border-left: 5px solid var(--accent);">
+      <div class="d-flex align-items-center gap-4 flex-wrap">
+        <div id="dashProfileImgContainer"></div>
+        <div>
+          <h3 id="profileName" class="mb-1 fw-bold text-dark">Welcome back!</h3>
+          <p class="text-muted mb-1" id="profileEmail">Loading email...</p>
+          <span class="badge bg-primary" id="profilePhone">Loading phone...</span>
+          <span class="badge" style="background: var(--accent);" id="profileType" data-i18n="reg_patient">Patient</span>
+        </div>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary fw-bold" id="openEditModalBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal">⚙️ <span data-i18n="ep_title_short">تعديل الملف</span></button>
+        <button class="btn btn-outline-danger fw-bold" onclick="dashboardLogout()" data-i18n="dash_logout_btn">تسجيل خروج</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-4 flex-grow-1">
+
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3"><div class="stat-card blue"><div class="stat-value" id="statTotal">0</div><div class="stat-label" data-i18n="stat_total">Total Requests</div><div class="stat-icon" aria-hidden="true">📋</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card green"><div class="stat-value" id="statActive">0</div><div class="stat-label" data-i18n="stat_active">Active</div><div class="stat-icon" aria-hidden="true">✅</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card amber"><div class="stat-value" id="statPending">0</div><div class="stat-label" data-i18n="stat_pending">Pending</div><div class="stat-icon" aria-hidden="true">⏳</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card purple"><div class="stat-value" id="statCompleted">0</div><div class="stat-label" data-i18n="stat_completed">Completed</div><div class="stat-icon" aria-hidden="true">🎉</div></div></div>
+    </div>
+
+    <div class="bg-white-card mb-4 shadow-sm" style="border-radius:16px;">
+      <div class="d-flex justify-content-between align-items-center p-3 border-bottom flex-wrap gap-2">
+        <h5 class="fw-bold mb-0 text-dark" data-i18n="dash_req_h">My Service Requests</h5>
+        <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" data-i18n="dash_refresh">↻ Refresh</button>
+      </div>
+
+      <div class="table-responsive p-3 pt-0 mt-3">
+        <table class="table table-hover align-middle" style="font-size:.92rem;">
+          <thead style="background:var(--light-bg);">
+            <tr>
+              <th data-i18n="dash_th_id">ID</th>
+              <th data-i18n="dash_th_nurse">NURSE</th>
+              <th data-i18n="dash_th_spec">SPECIALTY</th>
+              <th data-i18n="dash_th_date">DATE</th>
+              <th data-i18n="dash_th_time">TIME</th>
+              <th data-i18n="dash_th_status">STATUS</th>
+              <th data-i18n="dash_th_rate">RATE</th>
+              <th data-i18n="dash_th_action">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="requestsTable">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+      <div class="col-md-6">
+        <div class="bg-white-card h-100 shadow-sm" style="border-radius:16px;">
+          <h6 class="fw-bold mb-3 text-dark" data-i18n="dash_upcoming">Upcoming Visits</h6>
+          <div id="upcomingVisitsList"></div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="bg-white-card h-100 shadow-sm" style="border-radius:16px;">
+          <h6 class="fw-bold mb-3 text-dark" data-i18n="dash_tips">Health Tips</h6>
+          <div class="d-flex gap-3 mb-3">
+            <span style="font-size:1.4rem;" aria-hidden="true">💧</span>
+            <div>
+              <div class="fw-semibold small text-dark" data-i18n="tip_1_h">Stay Hydrated</div>
+              <div class="text-muted" style="font-size:.83rem;" data-i18n="tip_1_p">Drink at least 8 glasses of water daily, especially when recovering.</div>
+            </div>
+          </div>
+          <div class="d-flex gap-3 mb-3">
+            <span style="font-size:1.4rem;" aria-hidden="true">😴</span>
+            <div>
+              <div class="fw-semibold small text-dark" data-i18n="tip_2_h">Prioritize Rest</div>
+              <div class="text-muted" style="font-size:.83rem;" data-i18n="tip_2_p">Quality sleep is essential for healing and immune function.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-white" style="border-radius: 16px; border: none;">
+        <div class="modal-header" style="background: var(--light-bg); border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0;">
+          <h5 class="modal-title fw-bold text-dark" data-i18n="ep_title">تعديل الملف الشخصي</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="editProfileForm">
+            
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="editFirstName" class="form-label fw-bold text-muted small" data-i18n="ep_first">الاسم الأول</label>
+                <input type="text" class="form-control" id="editFirstName" name="first_name">
+              </div>
+              <div class="col-md-6">
+                <label for="editLastName" class="form-label fw-bold text-muted small" data-i18n="ep_last">اسم العائلة</label>
+                <input type="text" class="form-control" id="editLastName" name="last_name">
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="editEmail" class="form-label fw-bold text-muted small" data-i18n="ep_email">البريد الإلكتروني</label>
+                <input type="email" class="form-control" id="editEmail" name="email">
+              </div>
+              <div class="col-md-6">
+                <label for="editPhone" class="form-label fw-bold text-muted small" data-i18n="ep_phone">رقم الهاتف</label>
+                <input type="tel" class="form-control" id="editPhone" name="phone">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="editPassword" class="form-label fw-bold text-muted small" data-i18n="ep_pass">كلمة المرور الجديدة</label>
+              <input type="password" class="form-control" id="editPassword" name="password" data-i18n-placeholder="ep_pass_ph" placeholder="اتركه فارغاً لعدم التغيير">
+            </div>
+
+            <hr style="border-color: var(--border);">
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-muted small" data-i18n="ep_img">الصورة الشخصية الحالية</label>
+              <div id="profilePreviewContainer" class="mb-3 d-flex align-items-center" style="min-height: 90px;"></div>
+              <input type="file" class="form-control form-control-sm" id="profileImgInput" name="profile_img" accept="image/*">
+              <small class="text-muted mt-1 d-block" style="font-size:0.75rem;" data-i18n="ep_img_hint">اختر صورة جديدة لتغييرها</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2" style="font-size: 1.1rem; border-radius:8px;" id="saveProfileBtn" data-i18n="ep_save">حفظ التعديلات</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top: auto; padding: 20px 0; border-top: 1px solid var(--border); background: var(--white);">
+    <div class="container text-center text-muted small">
+      <span data-i18n="footer_copy">© 2026 NurseCare. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/lang.js"></script>
+  
+  <script>
+    // دالة تسجيل الخروج المربوطة بالزرار الأحمر
+    window.dashboardLogout = function() {
+        const msg = (typeof window.t === 'function') ? window.t('confirm_logout') || 'Are you sure you want to log out?' : 'Are you sure you want to log out?';
+        if(confirm(msg)) {
+            localStorage.removeItem('nc_active_user');
+            window.location.href = 'index.html';
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const activeUser = JSON.parse(localStorage.getItem('nc_active_user'));
+      if (!activeUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // تعبئة الكارت الشخصي والصورة الذكية
+      const fullName = activeUser.first_name ? (activeUser.first_name + ' ' + activeUser.last_name) : activeUser.name;
+      if(document.getElementById('profileName')) document.getElementById('profileName').textContent = fullName;
+      if(document.getElementById('profileEmail')) document.getElementById('profileEmail').textContent = activeUser.email;
+      if(document.getElementById('profilePhone')) document.getElementById('profilePhone').textContent = activeUser.phone || 'No phone added';
+
+      let nameParts = fullName.trim().split(/\s+/).filter(n => n.length > 0);
+      let initials = 'U';
+      if (nameParts.length >= 2) {
+          initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+      } else if (fullName.length >= 2) {
+          initials = fullName.substring(0, 2).toUpperCase();
+      }
+
+      let dbImage = activeUser.profile_image || activeUser.img || ''; 
+      const imgContainer = document.getElementById('dashProfileImgContainer');
+      let fallbackStyle = `width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dk)); color: white; border-radius: 50%; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; border: 3px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); letter-spacing:1px;`;
+      
+      if (dbImage && dbImage.trim() !== '' && !dbImage.includes('default-avatar') && dbImage !== 'null') {
+          imgContainer.innerHTML = `
+            <img src="${dbImage}" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="${fallbackStyle} display:none;">${initials}</div>
+          `;
+      } else {
+          imgContainer.innerHTML = `<div style="${fallbackStyle} display:flex;">${initials}</div>`;
+      }
+
+      // سحب الحجوزات
+      fetch(`api/get_bookings.php?user_id=${activeUser.id}`)
+        .then(res => res.json())
+        .then(response => {
+          const tbody = document.getElementById('requestsTable'); 
+          const upcomingList = document.getElementById('upcomingVisitsList');
+          
+          if(tbody) tbody.innerHTML = ''; 
+          if(upcomingList) upcomingList.innerHTML = '';
+
+          if(response.status === 'success' && response.data.length > 0) {
+            let upcomingHTML = '';
+            let upcomingCount = 0;
+            
+            document.getElementById('statTotal').textContent = response.data.length;
+            let pendingCount = 0;
+
+            response.data.forEach(booking => {
+              let statusBadge = `<span class="badge bg-warning text-dark">Pending</span>`;
+              if(booking.status === 'confirmed') statusBadge = `<span class="badge bg-success">Confirmed</span>`;
+              if(booking.status === 'completed') statusBadge = `<span class="badge bg-secondary">Completed</span>`;
+              
+              if(booking.status === 'pending') pendingCount++;
+
+              const bookingDataStr = encodeURIComponent(JSON.stringify(booking));
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td class="fw-bold text-primary">#REQ-${booking.id}</td>
+                <td class="text-muted small fw-bold">قيد التعيين</td>
+                <td>${booking.medical_need}</td>
+                <td>${booking.pref_date}</td>
+                <td>${booking.pref_time}</td>
+                <td>${statusBadge}</td>
+                <td>-</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button onclick="viewBooking('${bookingDataStr}')" class="btn btn-sm btn-outline-primary" style="border-radius:6px; font-weight:600;">View</button>
+                    ${booking.status === 'pending' ? `<button onclick="cancelBooking(${booking.id})" class="btn btn-sm btn-outline-danger" style="border-radius:6px; font-weight:600;">Cancel</button>` : ''}
+                  </div>
+                </td>
+              `;
+              if(tbody) tbody.appendChild(tr);
+
+              if (booking.status !== 'completed' && upcomingCount < 2) {
+                const dateObj = new Date(booking.pref_date);
+                const monthName = isNaN(dateObj) ? '---' : dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
+                const dayNum = isNaN(dateObj) ? '--' : dateObj.getDate();
+                
+                let upcomingStatus = booking.status === 'confirmed' ? '<span class="text-success small fw-bold">نشط</span>' : '<span class="text-warning small fw-bold" style="color:#d97706!important;">قيد الانتظار</span>';
+
+                upcomingHTML += `
+                <div class="d-flex align-items-center justify-content-between p-3 mb-3" style="background:var(--light-bg); border-radius:12px; border:1px solid var(--border);">
+                  <div>
+                    <h6 class="mb-1 fw-bold text-dark">${booking.medical_need}</h6>
+                    <div class="text-muted small">${upcomingStatus} · ${booking.pref_time}</div>
+                  </div>
+                  <div class="text-center" style="background:var(--primary); color:white; border-radius:8px; width:50px; height:50px; display:flex; flex-direction:column; justify-content:center; box-shadow:0 4px 10px rgba(37,99,235,0.2);">
+                    <span style="font-size:.7rem; font-weight:700; line-height:1; margin-bottom:2px;">${monthName}</span>
+                    <span style="font-size:1.1rem; font-weight:800; line-height:1;">${dayNum}</span>
+                  </div>
+                </div>
+                `;
+                upcomingCount++;
+              }
+            });
+
+            document.getElementById('statPending').textContent = pendingCount;
+            if(upcomingList) {
+              upcomingList.innerHTML = upcomingHTML !== '' ? upcomingHTML : '<p class="text-muted text-center py-3">لا توجد زيارات قادمة حالياً.</p>';
+            }
+
+          } else {
+            if(tbody) tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">You have no bookings yet.</td></tr>`;
+            if(upcomingList) upcomingList.innerHTML = '<p class="text-muted text-center py-3" data-i18n="no_upcoming_visits">لا توجد زيارات قادمة حالياً.</p>';
+          }
+        })
+        .catch(err => console.error('Error fetching bookings:', err));
+
+      // ==========================================
+      // سحر المودال (البيانات الشفافة للمريض)
+      // ==========================================
+      const editModal = document.getElementById('editProfileModal');
+      let removeProfileImg = false;
+
+      if (editModal) {
+          document.getElementById('openEditModalBtn').addEventListener('click', function () {
+              const au = JSON.parse(localStorage.getItem('nc_active_user'));
+              if(au) {
+                  let fName = au.first_name || '';
+                  let lName = au.last_name || '';
+                  if(!fName && au.name) {
+                      let parts = au.name.trim().split(/\s+/);
+                      fName = parts[0];
+                      lName = parts.slice(1).join(' ');
+                  }
+
+                  document.getElementById('editFirstName').placeholder = fName || 'الاسم الأول';
+                  document.getElementById('editLastName').placeholder = lName || 'اسم العائلة';
+                  document.getElementById('editEmail').placeholder = au.email || 'البريد الإلكتروني';
+                  document.getElementById('editPhone').placeholder = au.phone || 'رقم الهاتف';
+                  
+                  document.getElementById('editFirstName').value = '';
+                  document.getElementById('editLastName').value = '';
+                  document.getElementById('editEmail').value = '';
+                  document.getElementById('editPhone').value = '';
+                  document.getElementById('editPassword').value = ''; 
+                  document.getElementById('profileImgInput').value = '';
+
+                  const profContainer = document.getElementById('profilePreviewContainer');
+                  removeProfileImg = false; 
+                  
+                  let hasProfilePic = au.profile_image && au.profile_image.trim() !== '' && !au.profile_image.includes('default-avatar') && au.profile_image !== 'null';
+
+                  if (hasProfilePic) {
+                      profContainer.innerHTML = `
+                          <div class="position-relative d-inline-block">
+                              <img src="${au.profile_image}" class="rounded-circle border shadow-sm" style="width:85px;height:85px;object-fit:cover;border-color:var(--border)!important;" onerror="this.src='assets/default-avatar.png'">
+                              <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle d-flex align-items-center justify-content-center" style="width:24px;height:24px;padding:0;font-size:12px;box-shadow:0 2px 4px rgba(0,0,0,0.2);" onclick="removeProfImgPreview()" title="حذف الصورة">✕</button>
+                          </div>
+                      `;
+                  } else {
+                      profContainer.innerHTML = `
+                          <div class="position-relative d-inline-block opacity-50">
+                              <img src="assets/default-avatar.png" class="rounded-circle border shadow-sm" style="width:85px;height:85px;object-fit:cover;border-color:var(--border)!important;" alt="Default Avatar">
+                          </div>
+                      `;
+                  }
+              }
+          });
+      }
+
+      window.removeProfImgPreview = function() {
+          document.getElementById('profilePreviewContainer').innerHTML = `
+              <div class="position-relative d-inline-block opacity-50">
+                  <img src="assets/default-avatar.png" class="rounded-circle border shadow-sm" style="width:85px;height:85px;object-fit:cover;border-color:var(--border)!important;">
+              </div>
+              <div class="text-danger small fw-bold ms-3">سيتم الحذف عند التأكيد</div>
+          `;
+          removeProfileImg = true;
+      };
+
+      const editForm = document.getElementById('editProfileForm');
+      if (editForm) {
+          editForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              const btn = document.getElementById('saveProfileBtn');
+              btn.innerHTML = 'جاري الحفظ والرفع... ⏳';
+              btn.disabled = true;
+
+              const au = JSON.parse(localStorage.getItem('nc_active_user'));
+              const formData = new FormData(this);
+              formData.append('user_id', au.id);
+              formData.append('remove_profile_img', removeProfileImg ? 'true' : 'false');
+
+              fetch('api/update_profile.php', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(res => res.json())
+              .then(data => {
+                  if(data.status === 'success') {
+                      if(data.user && data.user.id) localStorage.setItem('nc_active_user', JSON.stringify(data.user));
+                      alert('✅ تم التحديث بنجاح!');
+                      location.reload(); 
+                  } else {
+                      alert('❌ ' + data.message);
+                      btn.innerHTML = 'حفظ التعديلات';
+                      btn.disabled = false;
+                  }
+              })
+              .catch(err => {
+                  console.error(err);
+                  alert('❌ حدث خطأ في الاتصال بالخادم!');
+                  btn.innerHTML = 'حفظ التعديلات';
+                  btn.disabled = false;
+              });
+          });
+      }
+    });
+
+    window.viewBooking = function(encodedData) {
+      const booking = JSON.parse(decodeURIComponent(encodedData));
+      const details = `
+🏥 تفاصيل الطلب رقم: REQ-${booking.id}
+-----------------------------------
+الخدمة: ${booking.medical_need}
+تاريخ الزيارة: ${booking.pref_date}
+الوقت: ${booking.pref_time}
+
+📍 العنوان: ${booking.address}
+📞 رقم التواصل: ${booking.phone}
+
+حالة الطلب: ${booking.status.toUpperCase()}
+      `;
+      alert(details);
+    };
+
+    window.cancelBooking = function(bookingId) {
+      if(confirm('⚠️ هل أنت متأكد من إلغاء هذا الحجز نهائياً؟')) {
+        fetch('api/cancel_request.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ booking_id: bookingId })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if(data.status === 'success') {
+            alert('✅ تم إلغاء الحجز بنجاح!');
+            location.reload();
+          } else {
+            alert('❌ ' + data.message);
+          }
+        })
+        .catch(err => console.error(err));
+      }
+    };
+  </script>
+</body>
+</html>
