@@ -8,10 +8,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    /* ========================================== */
-    /* 🌟 RTL Fixes 🌟 */
-    /* ========================================== */
     [dir="rtl"] .form-select {
         background-position: left 0.75rem center !important;
         padding-right: 1rem !important;
@@ -22,288 +20,84 @@
     }
   </style>
 </head>
+
 <body id="page-about" style="display: flex; flex-direction: column; min-height: 100vh;">
 
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="text-decoration:none;">
-        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-top navbar-logo">
-          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" fill="#2563eb" fill-opacity="0.1"/>
-          <path d="M21 2L5 8V18C5 28.1 11.8 37.3 21 40C30.2 37.3 37 28.1 37 18V8L21 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
-          <path d="M21 15V21M18 18H24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span style="color:#2563eb; font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; letter-spacing: -0.5px;">Nurse<span style="color:#14b8a6; font-weight: 500;">Care</span></span>
+        
+        <span style="color:#2563eb; font-weight:800; font-size:1.6rem;">
+          Nurse<span style="color:#14b8a6;">Care</span>
+        </span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">☰</button>
+
       <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav_home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="nurses.html" data-i18n="nav_nurses">Find Nurses</a></li>
-          <li class="nav-item"><a class="nav-link active" href="about.html" data-i18n="nav_about">About</a></li>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="nurses.html">Find Nurses</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
         </ul>
-        <div class="d-flex align-items-center gap-2 ms-3">
-          <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
-            <span class="lang-flag" aria-hidden="true">🌐</span>
-            <span data-i18n="nav_lang">العربية</span>
-          </button>
-          <a href="login.html" class="btn btn-outline-primary" data-i18n="nav_login">Log In</a>
-          <a href="register.html" class="btn btn-primary" data-i18n="nav_signup">Sign Up</a>
-        </div>
       </div>
     </div>
   </nav>
 
-  <section style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dk) 100%); padding: 70px 0 50px; color: white; position: relative; overflow: hidden;">
-    <div style="position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.06);"></div>
-    <div style="position:absolute;left:10%;bottom:-80px;width:200px;height:200px;border-radius:50%;background:rgba(240,165,0,0.1);"></div>
-    <div class="container text-center position-relative">
-      <p class="fw-bold mb-2" style="letter-spacing:1.5px;font-size:.85rem;opacity:.8;" data-i18n="about_tag">WHO WE ARE</p>
-      <h1 style="font-family:'Outfit',sans-serif; font-weight:800; font-size:2.8rem; color:#ffffff !important; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" data-i18n="about_h1">About NurseCare</h1>
-      <p class="mt-3 mx-auto" style="max-width:580px;opacity:.9;font-size:1.05rem;" data-i18n="about_p">
-        NurseCare is a university frontend project that simulates a home nursing service platform — inspired by Uber.
-      </p>
-    </div>
-  </section>
-
-  <section class="section-pad flex-grow-1">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="mission-card h-100" style="background:var(--white);box-shadow:var(--card-shadow);border-left:5px solid var(--primary); padding: 30px; border-radius: 12px;">
-            <div style="font-size:2.5rem;margin-bottom:1rem;" aria-hidden="true">🎯</div>
-            <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--primary);" data-i18n="about_mission_h">Our Mission</h3>
-            <p class="text-muted" style="line-height:1.8;" data-i18n="about_mission_p">
-              To make professional home nursing care accessible to everyone, anytime, anywhere — with trust, transparency, and compassion.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mission-card h-100" style="background:var(--white);box-shadow:var(--card-shadow);border-left:5px solid var(--accent); padding: 30px; border-radius: 12px;">
-            <div style="font-size:2.5rem;margin-bottom:1rem;" aria-hidden="true">🔭</div>
-            <h3 style="font-family:'Nunito',sans-serif;font-weight:800;color:var(--accent);" data-i18n="about_vision_h">Our Vision</h3>
-            <p class="text-muted" style="line-height:1.8;" data-i18n="about_vision_p">
-              To become the leading home healthcare platform in the region, empowering both patients and nursing professionals.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-pad" style="background:var(--white);padding-top:20px;">
+  <!-- HERO -->
+  <section style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); padding: 70px 0; color:white;">
     <div class="container text-center">
-      <p class="text-primary fw-bold mb-1" style="letter-spacing:1px;font-size:.9rem;" data-i18n="team_tag">THE TEAM</p>
-      <h2 class="section-title" data-i18n="team_h2">Meet the Team</h2>
-      <p class="section-subtitle" data-i18n="team_sub">The talented people who built NurseCare</p>
-
-      <div class="row g-4 justify-content-center mt-5">
-        <div class="col-sm-6 col-lg">
-          <div class="card team-card p-4 text-center h-100 shadow-sm" style="border-radius: 16px;">
-           <div class="avatar-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
-              <img src="images/dina.jpeg" alt="Dina Samy" class="rounded-circle img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <span class="role-badge" data-i18n="team_role_dina">Frontend Developer</span>
-            <div class="badge bg-secondary mb-2 mx-auto" style="width: max-content;">ID: 20230118</div>
-            <h5 class="fw-bold mb-1" style="font-family:'Nunito',sans-serif;">Dina Samy</h5>
-            <p class="text-muted small mb-3" data-i18n="team_bio_dina">Developed the full-stack (front-end and back-end) of the project, ensuring complete functionality and clean implementation.</p>
-            <div class="d-flex justify-content-center gap-2 mt-auto">
-              <a href="https://github.com/dony251" style="color:var(--primary);font-size:1.1rem;" title="GitHub">💻</a>
-              <a href="https://www.linkedin.com/in/dina-samy-a678242b7" style="color:var(--primary);font-size:1.1rem;" title="LinkedIn">🔗</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg">
-          <div class="card team-card p-4 text-center h-100 shadow-sm" style="border-radius: 16px;">
-            <div class="avatar-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
-              <img src="images/ehsan.jpeg" alt="Ehsan Hasan" class="rounded-circle img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>            
-            <span class="role-badge" style="background:#e6f9ed;color:var(--success);" data-i18n="team_role_ehsan">UI/CSS Developer</span>
-            <div class="badge bg-secondary mb-2 mx-auto" style="width: max-content;">ID: 20230792</div>
-            <h5 class="fw-bold mb-1" style="font-family:'Nunito',sans-serif;">Ehsan Hasan</h5>
-            <p class="text-muted small mb-3" data-i18n="team_bio_ehsan">Developed the CSS styling system, color palettes, and overall visual coordination.</p>
-            <div class="d-flex justify-content-center gap-2 mt-auto">
-              <a href="#" style="color:var(--primary);font-size:1.1rem;" title="GitHub">💻</a>
-              <a href="https://www.linkedin.com/in/ehsan-hasan-498281354" style="color:var(--primary);font-size:1.1rem;" title="LinkedIn">🔗</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg">
-          <div class="card team-card p-4 text-center h-100 shadow-sm" style="border-radius: 16px;">
-            <div class="avatar-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
-              <img src="images/ziad.jpeg" alt="Ziad Ahmed" class="rounded-circle img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>            
-            <span class="role-badge" style="background:#fff8e6;color:var(--accent);" data-i18n="team_role_ziad">Logic & Backend Developer</span>
-            <div class="badge bg-secondary mb-2 mx-auto" style="width: max-content;">ID: 20230896</div>
-            <h5 class="fw-bold mb-1" style="font-family:'Nunito',sans-serif;">Zead A. Fathy</h5>
-            <p class="text-muted small mb-3" data-i18n="team_bio_ziad">Developed JavaScript logic and contributed to backend functionality, database integration, and final project review.</p>
-            <div class="d-flex justify-content-center gap-2 mt-auto">
-              <a href="https://github.com/zeadahmedfathy" style="color:var(--primary);font-size:1.1rem;" title="GitHub">💻</a>
-              <a href="https://www.linkedin.com/in/zead-a-fathy-396aa13b7/" style="color:var(--primary);font-size:1.1rem;" title="LinkedIn">🔗</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg">
-          <div class="card team-card p-4 text-center h-100 shadow-sm" style="border-radius: 16px;">
-            <div class="avatar-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
-              <img src="images/mostafa.jpeg" alt="Mostafa Adel" class="rounded-circle img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>            
-            <span class="role-badge" style="background:#ede7f6;color:#7c5cbf;" data-i18n="team_role_mostafa">Database & ERD Admin</span>
-            <div class="badge bg-secondary mb-2 mx-auto" style="width: max-content;">ID: 20230449</div>
-            <h5 class="fw-bold mb-1" style="font-family:'Nunito',sans-serif;">Mostafa Adel</h5>
-            <p class="text-muted small mb-3" data-i18n="team_bio_mostafa">Database creator and coordinator, responsible for designing the ERD and managing data structure.</p>
-            <div class="d-flex justify-content-center gap-2 mt-auto">
-              <a href="#" style="color:var(--primary);font-size:1.1rem;" title="GitHub">💻</a>
-              <a href="#" style="color:var(--primary);font-size:1.1rem;" title="LinkedIn">🔗</a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-sm-6 col-lg">
-          <div class="card team-card p-4 text-center h-100 shadow-sm" style="border-radius: 16px;">
-            <div class="avatar-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
-              <img src="images/aya.jpeg" alt="Aya Saber" class="rounded-circle img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <span class="role-badge" data-i18n="team_role_data">AI Research & Analysis</span>
-            <div class="badge bg-secondary mb-2 mx-auto" style="width: max-content;">ID: 20231244</div>
-            <h5 class="fw-bold mb-1" style="font-family:'Nunito',sans-serif;">Aya Saber</h5>
-            <p class="text-muted small mb-3" data-i18n="team_bio_aya">Utilized Artificial Intelligence technologies to research, gather information, and support project development.</p>
-            <div class="d-flex justify-content-center gap-2 mt-auto">
-              <a href="#" style="color:var(--primary);font-size:1.1rem;" title="GitHub">💻</a>
-              <a href="#" style="color:var(--primary);font-size:1.1rem;" title="LinkedIn">🔗</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1 style="font-weight:800;">About NurseCare</h1>
+      <p class="mt-3">NurseCare is a university frontend project simulating home nursing services.</p>
     </div>
   </section>
 
+  <!-- TEAM -->
   <section class="section-pad">
     <div class="container text-center">
-      <p class="text-primary fw-bold mb-1" style="letter-spacing:1px;font-size:.9rem;" data-i18n="values_tag">WHAT DRIVES US</p>
-      <h2 class="section-title" data-i18n="values_h2">Our Core Values</h2>
-      <div class="row g-4 mt-2">
-        <div class="col-sm-6 col-lg-3">
-          <div class="card value-card h-100 shadow-sm p-4" style="border-radius: 16px;">
-            <div class="value-icon blue" style="background:#e8f3fb;color:var(--primary);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;">🔒</div>
-            <h5 class="fw-bold" data-i18n="val_1_h">Trust</h5>
-            <p class="text-muted small" data-i18n="val_1_p">Every nurse on our platform is verified, licensed, and background-checked.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card value-card h-100 shadow-sm p-4" style="border-radius: 16px;">
-            <div class="value-icon" style="background:#fde8ea;color:var(--danger);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;">❤️</div>
-            <h5 class="fw-bold" data-i18n="val_2_h">Compassion</h5>
-            <p class="text-muted small" data-i18n="val_2_p">We treat every patient with the warmth and care they deserve.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card value-card h-100 shadow-sm p-4" style="border-radius: 16px;">
-            <div class="value-icon green" style="background:#e6f9ed;color:var(--success);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;">⚡</div>
-            <h5 class="fw-bold" data-i18n="val_3_h">Speed</h5>
-            <p class="text-muted small" data-i18n="val_3_p">Book a home nurse in under 2 minutes — fast when it matters most.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card value-card h-100 shadow-sm p-4" style="border-radius: 16px;">
-            <div class="value-icon amber" style="background:#fff8e6;color:var(--accent);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;">💳</div>
-            <h5 class="fw-bold" data-i18n="val_4_h">Transparency</h5>
-            <p class="text-muted small" data-i18n="val_4_p">Flat-rate, honest pricing with no hidden fees.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="section-pad" style="background:var(--white);">
-    <div class="container text-center">
-      <p class="text-primary fw-bold mb-1" style="letter-spacing:1px;font-size:.9rem;" data-i18n="tech_tag">BUILT WITH</p>
-      <h2 class="section-title" data-i18n="tech_h2">Technologies Used</h2>
-      <p class="section-subtitle" data-i18n="tech_sub">All frontend — no backend required</p>
-      <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🌐</span> HTML5</span>
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🎨</span> CSS3</span>
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🅱️</span> Bootstrap 5</span>
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🤖</span> <span data-i18n="tech_ai">AI</span></span>
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">⚙️</span> JavaScript ES6</span>
-        <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🌍</span> <span data-i18n="tech_i18n">i18n (AR/EN)</span></span>
-         <span class="tech-badge" style="background:#f8fafc; border:1px solid var(--border); padding:8px 16px; border-radius:20px; font-weight:600;"><span style="font-size:1.3rem;">🛢️</span> <span data-i18n="MySQL">MySQL</span></span>
-      </div>
-    </div>
-  </section>
+      <h2>Meet the Team</h2>
 
- <section class="section-pad">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="bg-white-card text-center p-5 shadow-sm" style="border-radius: 20px; border: 1px solid var(--border);">
-            <div style="margin-bottom:1.5rem;">
-              <img src="images/thebes_academy_logo.png" alt="Thebes Academy Logo" style="max-height: 100px; width: auto;">
-            </div>
-            <h3 style="font-family:'Nunito',sans-serif;font-weight:800;" data-i18n="about_proj_h">Thebes Academy Project</h3>
-            <p class="text-muted mt-2" style="line-height:1.8;" data-i18n="about_proj_p">
-              This project was built as a university assignment to demonstrate frontend development skills using HTML, CSS, Bootstrap, AI skills and JavaScript. It is a fully functional prototype - a MySQL Database is involved.
+      <div class="row justify-content-center mt-5">
+
+        <!-- ONLY DINA -->
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-4 text-center shadow-sm" style="border-radius: 16px;">
+
+            <img src="images/dina.jpeg"
+                 alt="Dina Samy"
+                 class="rounded-circle mx-auto mb-3"
+                 style="width: 100px; height: 100px; object-fit: cover;">
+
+            <span class="badge bg-primary mb-2">Frontend Developer</span>
+
+            <h5 class="fw-bold">Dina Samy</h5>
+
+            <p class="text-muted small">
+              Developed the full frontend of the project with clean UI and full functionality.
             </p>
-            <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
-              <a href="nurses.html" class="btn btn-primary px-4 fw-bold" data-i18n="cta_btn2">Browse Nurses</a>
-              <a href="register.html" class="btn btn-outline-primary px-4 fw-bold" data-i18n="cta_btn1">Create Account</a>
+
+            <div>
+              <a href="https://github.com/dony251">💻</a>
+              <a href="https://www.linkedin.com/in/dina-samy-a678242b7">🔗</a>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <footer style="margin-top:auto; background-color: #0f172a; border-top:1px solid var(--border);">
-    <div class="container py-5">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="footer-brand mb-2 d-flex align-items-center gap-2">
-            <svg width="24" height="24" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 12.5C24.5 9 29.5 9 32.5 12C35.5 15 35.5 20 32.5 23C29.5 26 21 32 21 32C21 32 12.5 26 9.5 23C6.5 20 6.5 15 9.5 12C12.5 9 17.5 9 21 12.5Z" fill="#14b8a6"/>
-            </svg>
-            <span style="color:white; font-size:1.4rem; font-weight:800; font-family:'Outfit', sans-serif;">Nurse<span style="color:#14b8a6;">Care</span></span>
-          </div>
-          <p style="font-size:.9rem;line-height:1.7; color:#cbd5e1;" data-i18n="why_p">Professional home nursing services connecting patients with certified caregivers. Your health, our priority.</p>
-        </div>
-        <div class="col-md-2">
-          <h6 class="fw-bold" style="color:white;" data-i18n="footer_nav">Navigation</h6>
-          <ul class="list-unstyled small">
-            <li class="mb-2"><a href="index.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_home">Home</a></li>
-            <li class="mb-2"><a href="nurses.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_nurses">Find Nurses</a></li>
-            <li class="mb-2"><a href="about.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_about">About</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3">
-          <h6 class="fw-bold" style="color:white;" data-i18n="footer_specs">Specialties</h6>
-          <ul class="list-unstyled small">
-            <li class="mb-2"><a href="nurses.html?q=Elderly Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_elderly">Elderly Care</a></li>
-            <li class="mb-2"><a href="nurses.html?q=Post-Op Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_post_op">Post-Op Care</a></li>
-            <li class="mb-2"><a href="nurses.html?q=Pediatric Care" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_pediatric">Pediatric Care</a></li>
-            <li class="mb-2"><a href="nurses.html?q=Chronic Disease" class="text-decoration-none" style="color:#94a3b8;" data-i18n="spec_chronic">Chronic Disease</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3">
-          <h6 class="fw-bold" style="color:white;" data-i18n="footer_account">Account</h6>
-          <ul class="list-unstyled small">
-            <li class="mb-2"><a href="login.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_login">Log In</a></li>
-            <li class="mb-2"><a href="register.html" class="text-decoration-none" style="color:#94a3b8;" data-i18n="nav_signup">Sign Up</a></li>
-          </ul>
-          <div class="mt-3" style="font-size:.85rem; color:#94a3b8;" dir="ltr">📧 support@nursecare.com<br>📞 1-800-NURSE-00</div>
-        </div>
-      </div>
-      <div class="text-center mt-4 pt-4 border-top small" style="color:#64748b; border-color:#1e293b !important;" data-i18n="footer_copy">
-        © 2026 NurseCare. All rights reserved. | Built by Thebes Academy students.
-      </div>
+  <!-- FOOTER -->
+  <footer style="background:#0f172a; color:white; padding:40px 0;">
+    <div class="container text-center">
+      <p>© 2026 NurseCare. All rights reserved.</p>
     </div>
   </footer>
 
   <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/lang.js"></script>
 </body>
 </html>
